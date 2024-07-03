@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Customers</title>
+</head>
+
+<body>
+
+<div>
+
+    <h1>Customers</h1>
+
+    <table border="1" style="text-align: center;">
+
+        <tr>
+            <th>Customer Id</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th></th>
+        </tr>
+        <tr th:each="customer: ${customers}">
+            <td th:utext="${customer.id}"></td>
+            <td th:utext="${customer.name}"></td>
+            <td th:utext="${customer.surname}"></td>
+            <td>
+                <form method="GET" th:action="@{/web/v1/customers/{id}(id=${customer.id})}">
+                    <input type="submit" value="Show accounts"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Accounts</title>
+</head>
+
+<body>
+
+<div>
+
+    <h1>Accounts of <span th:text="${name}"></span> <span th:text="${surname}"></span></h1>
+
+    <table th:if="${accounts!=null and !accounts.empty}" border="1" style="text-align: center;">
+        <tr>
+            <th>Account Number</th>
+            <th>Balance</th>
+            <th></th>
+        </tr>
+        <tr th:each="account: ${accounts}">
+            <td th:utext="${account.accountNumber}"></td>
+            <td th:utext="${account.balance}"></td>
+            <td>
+                <form method="GET"
+                      th:action="@{/web/v1/customers/{customerId}/accounts/{accountId}
+                      (customerId=${customerId}, accountId=${account.id})}">
+                    <input type="submit" value="show transactions"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+    <div th:if="${accounts==null or accounts.empty}">
+        No accounts connected to this customer
+    </div>
+</div>
+
+<br>
+<br>
+
+<div>
+    <div>
+        <h2>Open New Account</h2>
+    </div>
+    <div>
+        <form method="POST" th:action="@{/web/v1/accounts}" th:object="${accountReqDTO}">
+            <input type="hidden" name="customerId" th:field="*{customerId}"/>
+            <div>
+                <label>
+                    Initial Credit:
+                    <input type="text" name="initialCredit" th:field="*{initialCredit}"
+                           placeholder="Add initial credit" style="text-align: center"/>
+                </label>
+            </div>
+
+            <div>
+                <button type="submit" name="submit">Open Account</button>
+            </div>
+        </form>
+    </div>
+</div>
+<br>
+<br>
+<div>
+    <form method="GET"
+          th:action="@{/web/v1/customers}">
+        <input type="submit" value="back"/>
+    </form>
+</div>
+</body>
+</html>

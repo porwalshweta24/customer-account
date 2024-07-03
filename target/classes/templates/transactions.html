@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Transactions</title>
+</head>
+
+<body>
+
+<div>
+
+    <h1>Transactions</h1>
+    <h3>Name: <span th:text="${customerName}"></span></h3>
+    <h3>Surname: <span th:text="${customerSurname}"></span></h3>
+    <h3>Account Number: <span th:text="${accountNumber}"></span></h3>
+
+    <table border="1" style="text-align: center;">
+
+        <tr>
+            <th>Transaction Number</th>
+            <th>Amount</th>
+            <th>Recipient</th>
+            <th>Description</th>
+            <th>Sending Date</th>
+        </tr>
+        <tr th:each="transaction: ${transactions}">
+            <td th:utext="${transaction.transactionNumber}"></td>
+            <td th:utext="${transaction.amount}"></td>
+            <td th:utext="${transaction.recipient}"></td>
+            <td th:utext="${transaction.description}"></td>
+            <td th:utext="${transaction.sendingDate}"></td>
+        </tr>
+    </table>
+</div>
+<br>
+<br>
+<div>
+    <form method="GET"
+          th:action="@{/web/v1/customers/{id}(id=${customerId})}">
+        <input type="submit" value="back"/>
+    </form>
+    <form method="GET"
+          th:action="@{/web/v1/customers}">
+        <input type="submit" value="home"/>
+    </form>
+</div>
+</body>
+</html>
